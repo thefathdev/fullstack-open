@@ -25,16 +25,24 @@ const App = () => {
   }, [])
 
   const saveNewPerson = (newPerson) => {
-    addPerson(newPerson).then((res) => {
-      setPersons(persons.concat(res))
-      setNewName('')
-      setNewPhoneNumber('')
-      setSuccess(true)
-      setMessage(`Added ${newPerson.name}`)
-      setTimeout(() => {
-        setMessage('')
-      }, 3000)
-    })
+    addPerson(newPerson)
+      .then((res) => {
+        setPersons(persons.concat(res))
+        setNewName('')
+        setNewPhoneNumber('')
+        setSuccess(true)
+        setMessage(`Added ${newPerson.name}`)
+        setTimeout(() => {
+          setMessage('')
+        }, 3000)
+      })
+      .catch((error) => {
+        setSuccess(false)
+        setMessage(`${error.response.data.error}`)
+        setTimeout(() => {
+          setMessage('')
+        }, 3000)
+      })
   }
 
   const updateNumber = (updatedPerson) => {
